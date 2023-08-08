@@ -22,7 +22,7 @@ public class HelloController {
     public ResponseEntity<String> helloWorld()
     {
         String s = "Hello World";
-        filterService.filter();
+//        filterService.filter();
         return ResponseEntity.ok(s);
     }
 }
