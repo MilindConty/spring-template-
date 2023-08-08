@@ -10,7 +10,7 @@ public class FilterService {
 
     public void filter(ArrayList<Map<String, Object>> employees,ArrayList<Map<String, Object>> filterCondition ){
 
-        ArrayList<Map<String, Object>> filteredEmployee = new ArrayList<>();
+        List<Map<String, Object>> filteredEmployee = Collections.synchronizedList(new ArrayList<>());
 
 
 //        List<Map<String, Object>> collect = employees.stream().filter(employee -> isValid(filterCondition, employee,filteredEmployee)).toList();
@@ -21,17 +21,20 @@ public class FilterService {
 //        }
 
         employees.parallelStream().forEach(employee -> applyRulesToList(filterCondition, employee,filteredEmployee));
-        System.out.print("FilteredEmployee");
-        System.out.println(filteredEmployee);
+//        System.out.print("FilteredEmployee");
+//        System.out.println(filteredEmployee);
+
+        System.out.println(filteredEmployee.toArray().length);
 //        System.out.println(collect);
     }
 
     private void applyRulesToList(ArrayList<Map<String, Object>> filterConditions,
                                   Map<String, Object> employee,
-                                  ArrayList<Map<String, Object>> filteredEmployee) {
+                                  List<Map<String, Object>> filteredEmployee) {
 
         List<Map<String, Object>> rulesForApplication =
                 filterConditions.stream().filter(rule -> isValidRule(rule, employee)).toList();
+
 //                getRulesForApplication(employee, filterConditions);
 //        List<Map<String, Object>> rulelist = filterConditions
 //                .stream()
